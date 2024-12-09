@@ -1,3 +1,15 @@
+-- recursive implementation of foldr
+foldr' :: (a -> b -> b) -> b -> [a] -> b
+foldr' f v [] = v
+foldr' f v (x:xs) = f x (foldr' f v xs)
+
+and' :: [Bool] -> Bool
+and' = foldr (&&) True
+
+or' :: [Bool] -> Bool
+or' = foldr (||) False
+
+
 -- ex.1: rewrite [ f x | x <- xs, p x ] using map and filter
 
 mapFilter f p xs = [ f x | x <- xs, p x ] 
@@ -38,13 +50,13 @@ dec2int xs = foldl sumProducts 0 pairs
     weights = iterate (*10) 1
     sumProducts = (\acc (digit, weight) -> acc + (digit * weight))
 
-and' :: [Bool] -> Bool
-and' = foldr (&&) True
+-- ex. 5
+-- self note: think about what the new function needs to accept and how to call the original function
+-- given that constraint.
+--
+-- f (a,b) to f a b
+curry' :: ((a,b) -> c) -> (a -> b -> c) 
+curry' f = (\a -> (\b -> f (a,b)))
 
-or' :: [Bool] -> Bool
-or' = foldr (||) False
-
--- my own recursive implementation of foldr
-foldr' :: (a -> b -> b) -> b -> [a] -> b
-foldr' f v [] = v
-foldr' f v (x:xs) = f x (foldr' f v xs)
+-- f a b to f (a,b)
+uncurry' f = (\(a,b) -> (f a) b)
