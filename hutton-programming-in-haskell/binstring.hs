@@ -26,3 +26,16 @@ bin2int bits = sum products
 bin2int' :: [Bit] -> Int
 bin2int' = foldr (\x y -> x + 2*y) 0
 
+-- n = 13
+-- 13 / 2 = 6 r 1  
+-- 6 / 2  = 3 r 0
+-- 3 / 2  = 1 r 1
+-- 1 / 2  = 0 r 1
+-- the remainders upon subsequent divisions by 2 are the binary digits
+
+int2bin :: Int -> [Bit]
+int2bin 0 = []
+int2bin n = n `mod` 2 : (int2bin (n `div` 2))
+
+
+
